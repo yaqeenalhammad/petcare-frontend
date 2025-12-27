@@ -1,91 +1,135 @@
-function Home() {
+import { useNavigate } from "react-router-dom";
+
+export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <div style={styles.page}>
-      <h2 style={styles.title}>Home Screen🐾</h2>
-
-      <div style={styles.unit}>
-        <div style={styles.icon}>🐶</div>
+      <div style={styles.header}>
+        <div style={styles.logo}>🐾</div>
         <div>
-          <h3 style={styles.unitTitle}>My Pets</h3>
-          <p style={styles.text}>You have 3 registered pets</p>
+          <h1 style={styles.title}>PetCare Home</h1>
+          <p style={styles.subtitle}>Choose a module to continue</p>
         </div>
       </div>
 
-      <div style={styles.unit}>
-        <div style={styles.icon}>💉</div>
-        <div>
-          <h3 style={styles.unitTitle}>Vaccinations</h3>
-          <p style={styles.text}>2 upcoming vaccinations this month</p>
+      {/* Adoption */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionTitle}>Adoption</h2>
+        <div style={styles.grid}>
+          <Card title="Dogs" icon="🐶" desc="Browse dogs for adoption" onClick={() => navigate("/adoption/dogs")} />
+          <Card title="Cats" icon="🐱" desc="Browse cats for adoption" onClick={() => navigate("/adoption/cats")} />
+          <Card title="Birds" icon="🐦" desc="Browse birds for adoption" onClick={() => navigate("/adoption/birds")} />
+          <Card title="Other Pets" icon="🐾" desc="Other animals" onClick={() => navigate("/adoption/other")} />
         </div>
-      </div>
+      </section>
 
-      <div style={styles.unit}>
-        <div style={styles.icon}>🩺</div>
-        <div>
-          <h3 style={styles.unitTitle}>Vet Appointments</h3>
-          <p style={styles.text}>1 appointment scheduled</p>
+      {/* Health */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionTitle}>Health</h2>
+        <div style={styles.grid}>
+          <Card
+            title="Vaccination Records"
+            icon="💉"
+            desc="View & track vaccines"
+            onClick={() => navigate("/vaccines")}
+          />
+          <Card
+            title="Private Vet Chat"
+            icon="🩺"
+            desc="Chat privately with a vet"
+            onClick={() => navigate("/chat/vet")}
+          />
         </div>
-      </div>
+      </section>
 
-      <div style={styles.unit}>
-        <div style={styles.icon}>🏡</div>
-        <div>
-          <h3 style={styles.unitTitle}>Adoption</h3>
-          <p style={styles.text}>5 pets available for adoption</p>
+      {/* Community */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionTitle}>Community</h2>
+        <div style={styles.grid}>
+          <Card
+            title="Public Chat"
+            icon="💬"
+            desc="Ask & share with others"
+            onClick={() => navigate("/chat/public")}
+          />
         </div>
-      </div>
+      </section>
     </div>
+  );
+}
+
+function Card({ title, icon, desc, onClick }) {
+  return (
+    <button style={styles.card} onClick={onClick} type="button">
+      <div style={styles.cardIcon}>{icon}</div>
+      <div style={{ textAlign: "left" }}>
+        <div style={styles.cardTitle}>{title}</div>
+        <div style={styles.cardDesc}>{desc}</div>
+      </div>
+    </button>
   );
 }
 
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "#f5efe6",
-    padding: 40,
-    maxWidth: 900,
-    margin: "0 auto",
+    background: "linear-gradient(135deg, #f6f2eb, #e8f4fb)",
+    padding: 28,
   },
-
-  title: {
-    marginBottom: 30,
-    color: "#2c7da0",
-  },
-
-  unit: {
+  header: {
+    maxWidth: 980,
+    margin: "0 auto 18px",
     display: "flex",
     alignItems: "center",
-    gap: 20,
-    background: "#ffffff",
-    borderRadius: 20,
-    padding: 24,
-    marginBottom: 20,
-    boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+    gap: 14,
+    background: "rgba(255,255,255,0.75)",
+    border: "1px solid rgba(0,0,0,0.06)",
+    borderRadius: 18,
+    padding: 16,
+    boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+  },
+  logo: {
+    width: 54,
+    height: 54,
+    borderRadius: 16,
+    display: "grid",
+    placeItems: "center",
+    fontSize: 26,
+    background: "linear-gradient(135deg, #7dd3fc, #a7f3d0)",
+  },
+  title: { margin: 0, color: "#0f172a", fontSize: 22 },
+  subtitle: { margin: "4px 0 0", color: "#475569", fontSize: 13 },
+
+  section: { maxWidth: 980, margin: "18px auto" },
+  sectionTitle: { margin: "10px 0", color: "#2c7da0", fontSize: 18 },
+
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: 14,
   },
 
-  icon: {
-    width: 60,
-    height: 60,
-    borderRadius: "50%",
-    background: "#76c7d6",
+  card: {
+    border: "1px solid rgba(0,0,0,0.08)",
+    background: "rgba(255,255,255,0.85)",
+    borderRadius: 18,
+    padding: 16,
     display: "flex",
+    gap: 12,
     alignItems: "center",
-    justifyContent: "center",
-    fontSize: 28,
-    color: "#fff",
-    flexShrink: 0,
+    cursor: "pointer",
+    boxShadow: "0 10px 26px rgba(0,0,0,0.06)",
   },
-
-  unitTitle: {
-    margin: 0,
-    color: "#2c7da0",
+  cardIcon: {
+    width: 46,
+    height: 46,
+    borderRadius: 14,
+    display: "grid",
+    placeItems: "center",
+    fontSize: 22,
+    background: "#d9eef7",
   },
-
-  text: {
-    margin: "6px 0 0",
-    color: "#555",
-    fontSize: 14,
-  },
+  cardTitle: { fontWeight: 700, color: "#0f172a" },
+  cardDesc: { marginTop: 3, fontSize: 12, color: "#475569" },
 };
-
-export default Home;

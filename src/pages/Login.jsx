@@ -1,32 +1,104 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
 
+  const [mode, setMode] = useState("login"); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = () => {
+    setError("");
+
+    if (!email.includes("@")) {
+      setError("Please enter a valid email");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    if (mode === "register" && password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    
+    navigate("/home");
+  };
+
   return (
     <div style={styles.page}>
       <div style={styles.card}>
-        <div style={styles.logo}>🐾</div>
+        <div style={styles.logoCircle}>🐾</div>
 
-        <h2 style={styles.title}>PetCare Jordan</h2>
-        <p style={styles.subtitle}>Welcome 💙</p>
+        <h1 style={styles.title}>PetCare Jordan</h1>
+        <p style={styles.subtitle}>
+          {mode === "login" ? "Welcome back 💙" : "Create new account 💙"}
+        </p>
 
-        <label style={styles.label}>
-          Email
-          <input type="email" placeholder="example@email.com" style={styles.input} />
-        </label>
+        <div style={styles.field}>
+          <label style={styles.label}>Email</label>
+          <input
+            type="email"
+            placeholder="example@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={styles.input}
+          />
+        </div>
 
-        <label style={styles.label}>
-          Password
-          <input type="password" placeholder="********" style={styles.input} />
-        </label>
+        <div style={styles.field}>
+          <label style={styles.label}>Password</label>
+          <input
+            type="password"
+            placeholder="********"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={styles.input}
+          />
+        </div>
 
-        <button style={styles.button} onClick={() => navigate("/home")}>
-          Login
+        {mode === "register" && (
+          <div style={styles.field}>
+            <label style={styles.label}>Confirm Password</label>
+            <input
+              type="password"
+              placeholder="********"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              style={styles.input}
+            />
+          </div>
+        )}
+
+        {error && <p style={styles.error}>{error}</p>}
+
+        <button onClick={handleSubmit} style={styles.button}>
+          {mode === "login" ? "Login" : "Register"}
         </button>
 
         <p style={styles.footer}>
-          Don’t have an account? <span style={styles.link}>Register</span>
+          {mode === "login" ? (
+            <>
+              Don’t have an account?{" "}
+              <span style={styles.link} onClick={() => setMode("register")}>
+                Register
+              </span>
+            </>
+          ) : (
+            <>
+              Already have an account?{" "}
+              <span style={styles.link} onClick={() => setMode("login")}>
+                Login
+              </span>
+            </>
+          )}
         </p>
       </div>
     </div>
@@ -36,68 +108,83 @@ function Login() {
 const styles = {
   page: {
     minHeight: "100vh",
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "#f5efe6",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, #f6f2eb, #e8f4fb)",
     padding: 24,
   },
   card: {
-    width: "100%",
-    maxWidth: 420,
-    background: "#ffffff",
+    width: 380,
+    background: "#fffdf9",
     borderRadius: 20,
     padding: 28,
-    boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-    display: "flex",
-    flexDirection: "column",
-    gap: 14,
     textAlign: "center",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
   },
-  logo: {
+  logoCircle: {
     width: 70,
     height: 70,
+    margin: "0 auto 12px",
     borderRadius: "50%",
-    background: "#dff3f8",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 32,
-    margin: "0 auto",
+    background: "#d9eef7",
+    display: "grid",
+    placeItems: "center",
+    fontSize: 30,
   },
-  title: { margin: 0, fontSize: 26, color: "#2c7da0" },
-  subtitle: { margin: 0, fontSize: 14, color: "#777" },
-  label: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 6,
+  title: {
+    margin: 0,
+    color: "#4fa3c7",
+    fontSize: 26,
+  },
+  subtitle: {
+    margin: "6px 0 20px",
+    color: "#777",
     fontSize: 14,
+  },
+  field: {
     textAlign: "left",
-    color: "#444",
-    marginTop: 8,
+    marginBottom: 14,
+  },
+  label: {
+    fontSize: 13,
+    color: "#555",
+    marginBottom: 4,
+    display: "block",
   },
   input: {
     width: "100%",
-    padding: 12,
+    padding: "10px 12px",
     borderRadius: 12,
-    border: "1px solid #cce3ea",
+    border: "1px solid #dcdcdc",
     fontSize: 14,
-    boxSizing: "border-box",
-    background: "#f9fdff",
+    outline: "none",
   },
   button: {
+    width: "100%",
     marginTop: 10,
     padding: 12,
     borderRadius: 14,
     border: "none",
-    background: "#76c7d6",
-    color: "#ffffff",
+    background: "#9fd3ea",
+    color: "#fff",
     fontSize: 15,
     cursor: "pointer",
   },
-  footer: { fontSize: 13, color: "#555", marginTop: 6 },
-  link: { color: "#2c7da0", cursor: "pointer", textDecoration: "underline" },
+  error: {
+    color: "#d9534f",
+    fontSize: 13,
+    margin: "6px 0",
+  },
+  footer: {
+    marginTop: 16,
+    fontSize: 13,
+    color: "#555",
+  },
+  link: {
+    color: "#4fa3c7",
+    cursor: "pointer",
+    textDecoration: "underline",
+  },
 };
 
 export default Login;
