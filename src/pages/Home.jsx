@@ -55,6 +55,32 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {/* Lost & Found */}
+<section style={styles.section}>
+  <h2 style={styles.sectionTitle}>Lost & Found</h2>
+  <div style={styles.grid}>
+    <Card
+      title="Browse Lost Pets"
+      icon="📌"
+      desc="See reported lost pets"
+      onClick={() => navigate("/lost-pets")}
+    />
+    <Card
+      title="Search by Pet ID"
+      icon="🔎"
+      desc="Enter Pet ID to locate info"
+      onClick={() => navigate("/lost-pets/search")}
+    />
+    <Card
+      title="Report Lost Pet"
+      icon="📝"
+      desc="Create a new lost report"
+      onClick={() => navigate("/lost-pets/new")}
+    />
+  </div>
+</section>
+
     </div>
   );
 }
@@ -132,4 +158,4 @@ const styles = {
   },
   cardTitle: { fontWeight: 700, color: "#0f172a" },
   cardDesc: { marginTop: 3, fontSize: 12, color: "#475569" },
-};
+}

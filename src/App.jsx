@@ -6,9 +6,11 @@ import AdoptionList from "./pages/AdoptionList";
 import Vaccines from "./pages/Vaccines";
 import Chat from "./pages/Chat";
 import PetDetails from "./pages/PetDetails";
-
-
+import LostPets from "./pages/LostPets";
+import LostPetsList from "./pages/LostPetsList";
+import LostPetsSearch from "./pages/LostPetsSearch";
 export default function App() {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -21,7 +23,9 @@ export default function App() {
         <Route path="/vaccines" element={<Vaccines />} />
         <Route path="/chat/:room" element={<Chat />} />
         <Route path="/pet/:id" element={<PetDetails />} />
-
+        <Route path ="/lost-pets" element={<LostPetsList/>}/> 
+        <Route path ="/lost-pets/new" element={<LostPets/>}/>
+        <Route path="/lost-pets/search" element={<LostPetsSearch />} />
       </Routes>
     </BrowserRouter>
   );
