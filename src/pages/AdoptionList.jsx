@@ -3,12 +3,12 @@ import { pets } from "../data/pets";
 
 export default function AdoptionList() {
   const navigate = useNavigate();
-  const { type } = useParams(); 
-  const list =
-  type === "other"
-    ? pets.filter((p) => !["dogs", "cats", "birds"].includes(p.type))
-    : pets.filter((p) => p.type === type);
+  const { type } = useParams();
 
+  const list =
+    type === "other"
+      ? pets.filter((p) => !["dogs", "cats", "birds"].includes(p.type))
+      : pets.filter((p) => p.type === type);
 
   return (
     <div style={{ padding: 24 }}>
@@ -21,35 +21,35 @@ export default function AdoptionList() {
           <div
             key={p.id}
             style={card}
-            onClick={() => navigate(`/pet/${p.id}`)}
+            onClick={() => navigate(`/pet/${p.id}`)} 
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") navigate(`/pet/${p.id}`);
+            }}
           >
             <div style={imageBox}>
               <img src={p.image} alt={p.name} style={image} />
             </div>
 
+            
             <h3 style={{ margin: "10px 0 4px" }}>{p.name}</h3>
 
-            <div style={meta}>
-              {p.gender} • {p.ageMonths} months • {p.city}
+            <div style={mini}>
+              {p.gender} • {p.city}
             </div>
 
-            <div style={desc}>{p.description}</div>
-
-            <div style={vacc}>
-              Vaccinated: <b>{p.vaccinated ? "Yes" : "No"}</b>
-            </div>
-
+            
             <button
               style={btn}
               onClick={(e) => {
-                e.stopPropagation();
-                 navigate(`/pet/${p.id}`);
+                e.stopPropagation(); 
+                navigate(`/pet/${p.id}`);
               }}
               type="button"
             >
               For More Information
             </button>
-
           </div>
         ))}
       </div>
@@ -91,24 +91,12 @@ const imageBox = {
 const image = {
   maxWidth: "100%",
   maxHeight: "100%",
-  objectFit: "contain",
+  objectFit: "cover", 
 };
 
-const meta = {
-  color: "#555",
-  fontSize: 13,
-};
-
-const desc = {
-  marginTop: 8,
-  fontSize: 13,
-  color: "#333",
-  flexGrow: 1,
-};
-
-const vacc = {
-  marginTop: 10,
-  fontSize: 13,
+const mini = {
+  color: "#64748b",
+  fontSize: 12,
 };
 
 const btn = {

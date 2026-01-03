@@ -5,14 +5,14 @@ export default function LostPets() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    petId: "",               // ✅ NEW
+    petId: "",              
     petName: "",
-    type: "Cat",             // ✅ includes Birds
+    type: "Cat",            
     color: "",
     gender: "Unknown",
     age: "",
     lostDate: "",
-    lastSeenAt: "",          // ✅ NEW (آخر مرة شفت الحيوان؟)
+    lastSeenAt: "",        
     city: "",
     area: "",
     description: "",
@@ -264,7 +264,7 @@ export default function LostPets() {
                 value={form.contactPhone}
                 onChange={onChange}
                 style={styles.input}
-                placeholder="07XXXXXXXX"
+                placeholder="07********"
               />
             </div>
 

@@ -42,7 +42,7 @@ export default function PetDetails() {
     }
 
     if (!isValidPhone(phone)) {
-      setError("Phone must be a valid number (07XXXXXXXX).");
+      setError("Phone must be a valid number (07********).");
       return;
     }
 
@@ -128,7 +128,7 @@ export default function PetDetails() {
 
               <input
                 style={styles.input}
-                placeholder="Phone Number (07XXXXXXXX)"
+                placeholder="Phone Number (07********)"
                 value={phone}
                 onChange={(e) =>
                   setPhone(e.target.value.replace(/\D/g, ""))
